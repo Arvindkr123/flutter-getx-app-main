@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/controllers/data_controller.dart';
+import 'package:flutter_getx/controllers/fav_controller.dart';
 import 'package:flutter_getx/models/details_data_model.dart';
 import 'package:get/get.dart';
 
 class DetailPage extends GetView<DataController> {
-  const DetailPage({Key? key}) : super(key: key);
+  DetailPage({Key? key}) : super(key: key);
+  final favController = Get.find<FavController>();
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -290,21 +292,29 @@ class DetailPage extends GetView<DataController> {
                   ),
                 )
             ]),
-            
+
             //favourite
             Positioned(
                 top: 670,
                 left: 25,
                 child: Row(
                   children: [
-                    Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xFFfbc33e)),
-                        child:
-                            Icon(Icons.favorite_border, color: Colors.white)),
+                    GestureDetector(
+                      onTap: () {
+                        favController.fav = !favController.fav;
+                        print('fav value is ${favController.fav}');
+                      },
+                      child: Obx(() => Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: favController.fav == false
+                                  ? Color(0xFFfbc33e)
+                                  : Colors.red),
+                          child: Icon(Icons.favorite_border,
+                              color: Colors.white))),
+                    ),
                     SizedBox(
                       width: 10,
                     ),

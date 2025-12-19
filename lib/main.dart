@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_getx/controllers/fav_controller.dart';
 import 'package:flutter_getx/routes/routes_name.dart';
 import 'package:get/get.dart';
 import 'views/content_page.dart';
@@ -8,6 +9,7 @@ import 'views/my_home_page.dart';
 import 'package:device_preview/device_preview.dart';
 
 void main() {
+  Get.put(FavController());
   runApp(DevicePreview(
     enabled: !kReleaseMode, // 👈 Disabled in Release mode
     builder: (context) => MyApp(),
