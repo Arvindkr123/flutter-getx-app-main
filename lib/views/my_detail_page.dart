@@ -3,16 +3,17 @@ import 'package:flutter_getx/controllers/data_controller.dart';
 import 'package:flutter_getx/models/details_data_model.dart';
 import 'package:get/get.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends GetView<DataController> {
   const DetailPage({Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     int _currentIndex = 0;
 
-    final DetailsDataModel dataModel = Get.arguments as DetailsDataModel;
-    print(dataModel);
-
+    // final DetailsDataModel dataModel = Get.arguments as DetailsDataModel;
+    final String? id = Get.parameters['id'];
+    final index = int.parse(id!);
+    final dataModel = controller.dataList[index];
     return Scaffold(
       body: Container(
         color: Color(0xFFc5e5f3),
@@ -31,7 +32,7 @@ class DetailPage extends StatelessWidget {
               height: 100,
               width: width,
               child: Container(
-              width: width,
+                width: width,
                 height: 100,
                 margin: const EdgeInsets.only(left: 25, right: 25),
                 decoration: BoxDecoration(
@@ -44,10 +45,10 @@ class DetailPage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("img/background.jpg"),
+                        backgroundImage: AssetImage("${dataModel.img}"),
                       ),
                       SizedBox(
-                      width: 10,
+                        width: 10,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -262,13 +263,13 @@ class DetailPage extends StatelessWidget {
                               color: Colors.black),
                           children: [
                         TextSpan(
-                            text: "(11)",
+                            text: "${controller.dataList.length}",
                             style: TextStyle(color: Color(0xFFfbc33e)))
                       ])),
                 )),
             //images
             Stack(children: [
-              for (int i = 0; i < 5; i++)
+              for (int i = 0; i < controller.dataTempList.length; i++)
                 Positioned(
                   top: 590,
                   left: (20 + i * 35).toDouble(),
@@ -277,12 +278,19 @@ class DetailPage extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
+                        border: i == 0
+                            ? Border.all(
+                                color: Colors.blue,
+                                width: 2) // highlight selected
+                            : null,
                         image: DecorationImage(
-                            image: AssetImage("img/background.jpg"),
+                            image:
+                                AssetImage("${controller.dataTempList[i].img}"),
                             fit: BoxFit.cover)),
                   ),
                 )
             ]),
+            
             //favourite
             Positioned(
                 top: 670,

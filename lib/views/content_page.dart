@@ -22,8 +22,6 @@ class ContentPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     int _currentIndex = 0;
 
-    
-
     return Obx(() {
       if (_controller.isLoading == true) {
         return Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -148,9 +146,10 @@ class ContentPage extends StatelessWidget {
                       itemBuilder: (_, i) {
                         return GestureDetector(
                           onTap: () {
+                            _controller.updateTempList(i);
                             Get.toNamed(
-                              RouteNames.getDetailPage(),
-                              arguments: _controller.dataList[i]
+                              RouteNames.getDetailPage(i),
+                              // arguments: _controller.dataList[i]
                             );
                           },
                           child: Container(
@@ -264,61 +263,70 @@ class ContentPage extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             itemCount: _controller.dataList.length,
                             itemBuilder: (_, i) {
-                              return Container(
-                                width: width,
-                                height: 100,
-                                margin: const EdgeInsets.only(
-                                    left: 25, right: 25, bottom: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xFFebf8fd),
-                                ),
+                              return GestureDetector(
+                                onTap: () {
+                                  _controller.updateTempList(i);
+                                  Get.toNamed(
+                                    RouteNames.getDetailPage(i),
+                                    // arguments: _controller.dataList[i]
+                                  );
+                                },
                                 child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 40,
-                                        backgroundImage:
-                                            AssetImage("${_controller.dataList[i].img}"),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 170,
-                                            child: Text(
-                                              "${_controller.dataList[i].name}",
-                                              style: TextStyle(
-                                                  color: Color(0xFF3b3f42),
-                                                  fontSize: 18,
-                                                  decoration:
-                                                      TextDecoration.none),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Expanded(child: Container()),
-                                      Container(
-                                        width: 40,
-                                        height: 40,
-                                        child: Text(
-                                          "${_controller.dataList[i].time}",
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                              decoration: TextDecoration.none,
-                                              color: Color(0xFFb2b8bb)),
+                                  width: width,
+                                  height: 100,
+                                  margin: const EdgeInsets.only(
+                                      left: 25, right: 25, bottom: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0xFFebf8fd),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20),
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 40,
+                                          backgroundImage: AssetImage(
+                                              "${_controller.dataList[i].img}"),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: 170,
+                                              child: Text(
+                                                "${_controller.dataList[i].name}",
+                                                style: TextStyle(
+                                                    color: Color(0xFF3b3f42),
+                                                    fontSize: 18,
+                                                    decoration:
+                                                        TextDecoration.none),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Expanded(child: Container()),
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          child: Text(
+                                            "${_controller.dataList[i].time}",
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                                decoration: TextDecoration.none,
+                                                color: Color(0xFFb2b8bb)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

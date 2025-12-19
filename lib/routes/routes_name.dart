@@ -12,7 +12,8 @@ class RouteNames {
   static String getInitial() => initial;
   static String getHomePage() => homePage;
   static String getContentPage() => contentPage;
-  static String getDetailPage() => detailPage;
+  // static String getDetailPage() => detailPage;
+  static String getDetailPage(int id) => '$detailPage?id=${id}';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => MyHomePage()),
